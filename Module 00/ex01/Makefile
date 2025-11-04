@@ -1,7 +1,7 @@
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-SRCS	=	.cpp
+SRCS	=	main.cpp	Phonebook.cpp	Contact.cpp
 
 OBJDIR	=	OBJS
 OBJS	=	$(SRCS:%.cpp=$(OBJDIR)/%.o)

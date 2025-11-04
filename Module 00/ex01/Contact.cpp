@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 21:35:13 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/03 22:04:33 by jchuah           ###   ########.fr       */
+/*   Updated: 2025/11/04 17:24:26 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static bool isBlank(const std::string &str)
 	return str.find_first_not_of(" \t\n\r\f\v") == std::string::npos;
 }
 
-Contact::Contact()
+Contact::Contact() {}
+
+
 {
 	std::cin.clear();
 	while (isBlank(_first_name))

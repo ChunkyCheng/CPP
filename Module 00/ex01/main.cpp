@@ -6,13 +6,15 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 21:50:01 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/03 21:50:33 by jchuah           ###   ########.fr       */
+/*   Updated: 2025/11/04 17:21:14 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Phonebook.hpp"
 #include "Contact.hpp"
 
 int	main(void)
 {
-	Contact	contact1;
+	Phonebook	phonebook;
+
 }
