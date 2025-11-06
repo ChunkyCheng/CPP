@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 21:35:13 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/04 17:24:26 by jchuah           ###   ########.fr       */
+/*   Updated: 2025/11/06 15:21:44 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ static bool isBlank(const std::string &str)
 
 Contact::Contact() {}
 
-
+void	Contact::get_info(void)
 {
+	_first_name = "";
+	_last_name = "";
+	_nickname = "";
+	_number = "";
+	_secret = "";
 	std::cin.clear();
 	while (isBlank(_first_name))
 	{
@@ -75,29 +80,4 @@ std::string	Contact::getNumber(void) const
 std::string	Contact::getSecret(void) const
 {
 	return(_secret);
-}
-
-void	Contact::setFirstName(const std::string &str)
-{
-	_first_name = str;
-}
-
-void	Contact::setLastName(const std::string &str)
-{
-	_last_name = str;
-}
-
-void	Contact::setNickname(const std::string &str)
-{
-	_nickname = str;
-}
-
-void	Contact::setNumber(const std::string &str)
-{
-	_number = str;
-}
-
-void	Contact::setSecret(const std::string &str)
-{
-	_secret = str;
 }

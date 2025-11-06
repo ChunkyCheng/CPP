@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:33:21 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/03 21:55:46 by jchuah           ###   ########.fr       */
+/*   Updated: 2025/11/06 15:22:52 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ class	Contact
 		std::string getNumber(void) const;
 		std::string	getSecret(void) const;
 
-		void 		setFirstName(const std::string &str);
-		void 		setLastName(const std::string &str);
-		void 		setNickname(const std::string &str);
-		void 		setNumber(const std::string &str);
-		void 		setSecret(const std::string &str);
+		void		get_info(void);
 
 	private:
 		std::string	_first_name;

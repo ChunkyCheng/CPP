@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:31:19 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/04 17:14:46 by jchuah           ###   ########.fr       */
+/*   Updated: 2025/11/06 15:50:54 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ class	Phonebook
 		~Phonebook();
 		
 		void	add_contact(void);
-		void	search(void);
-		void	exit(void);
+		void	search_contacts(void);
+		void	display_contact_info(void);
 
 	private:
 		Contact	_contacts[8];
 		int		_contact_count;
+		int		_added_contacts;
 };
 
 #endif
