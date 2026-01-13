@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 18:12:24 by jchuah            #+#    #+#             */
-/*   Updated: 2025/11/19 18:42:01 by jchuah           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:10:46 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 Zombie::Zombie(std::string name)
 {
 	_name = name;
+	std::cout << "Zombie " << _name << " created" << std::endl;
 }
 
 Zombie::~Zombie()
