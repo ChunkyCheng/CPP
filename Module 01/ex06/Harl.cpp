@@ -6,7 +6,7 @@
 /*   By: jchuah <jeremychuahtm@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:24:27 by jchuah            #+#    #+#             */
-/*   Updated: 2026/01/14 19:48:12 by jchuah           ###   ########.fr       */
+/*   Updated: 2026/01/14 20:01:01 by jchuah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,8 @@ Harl::Harl() {}
 
 Harl::~Harl() {}
 
-const Harl::s_entry	Harl::_complain_table[] =
-{
-	{"DEBUG", &Harl::debug},
-	{"INFO", &Harl::info},
-	{"WARNING", &Harl::warning},
-	{"ERROR", &Harl::error}
-};
-
-const int	Harl::_table_size = sizeof(Harl::_complain_table) / sizeof(Harl::s_entry);
+std::string const	Harl::levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+const int			Harl::level_count = sizeof(Harl::levels) / sizeof(std::string);
 
 void	Harl::debug(void)
 {
@@ -63,13 +56,29 @@ void	Harl::complain(std::string level)
 	int	i;
 
 	i = 0;
-	while (i < _table_size)
+	while (i < level_count)
 	{
-		if (level == _complain_table[i].level)
-		{
-			(this->*_complain_table[i].action)();
-			return ;
-		}
+		if (level == levels[i])
+			break ;
 		i++;
+	}
+	switch (i)
+	{
+		case 0:
+			Harl::debug();
+			//fallthrough
+		case 1:
+			Harl::info();
+			//fallthrough
+		case 2:
+			Harl::warning();
+			//fallthrough
+		case 3:
+			Harl::error();
+			break ;
+		default:
+			std::cout	<< "[ Probably complaining about insignificant problems ]"
+						<< std::endl;
+			break ;
 	}
 }
