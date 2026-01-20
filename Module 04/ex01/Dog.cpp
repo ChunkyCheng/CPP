@@ -5,7 +5,7 @@ Dog::Dog(void)
 	:Animal("Dog"), _brain(NULL)
 {
 	_brain = new Brain;
-	std::cout << "Dog default constructor called" << std::endl;
+	std::cerr << "Dog default constructor called" << std::endl;
 }
 
 Dog::Dog(const Dog& other)
@@ -13,7 +13,7 @@ Dog::Dog(const Dog& other)
 {
 	if (other._brain)
 		_brain = new Brain(*other._brain);
-	std::cout << "Dog copy constructor called" << std::endl;
+	std::cerr << "Dog copy constructor called" << std::endl;
 }
 
 Dog&	Dog::operator=(const Dog& other)
@@ -27,14 +27,24 @@ Dog&	Dog::operator=(const Dog& other)
 		else
 			_brain = NULL;
 	}
-	std::cout << "Dog copy assignment operator called" << std::endl;
+	std::cerr << "Dog copy assignment operator called" << std::endl;
 	return (*this);
 }
 
 Dog::~Dog(void)
 {
 	delete _brain;
-	std::cout << "Dog destructor called" << std::endl;
+	std::cerr << "Dog destructor called" << std::endl;
+}
+
+const std::string&	Dog::getIdea(unsigned int index) const
+{
+	return (_brain->getIdea(index));
+}
+
+void	Dog::setIdea(unsigned int index, std::string idea) const
+{
+	return (_brain->setIdea(index, idea));
 }
 
 void	Dog::makeSound(void) const

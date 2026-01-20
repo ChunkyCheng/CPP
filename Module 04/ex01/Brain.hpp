@@ -11,10 +11,13 @@ class	Brain
 		Brain&	operator=(const Brain& other);
 		~Brain(void);
 
+		const std::string&	getIdea(unsigned int index) const;
+		void				setIdea(unsigned int index, std::string idea);
+
 	protected:
 	private:
-		std::string					_ideas[100];
-		static const unsigned int	_idea_count;
+		static const unsigned int	_IDEA_COUNT = 100;
+		std::string					_ideas[_IDEA_COUNT];
 };
 
 #endif

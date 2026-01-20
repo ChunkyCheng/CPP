@@ -12,11 +12,14 @@ class	Cat : public Animal
 		Cat&	operator=(const Cat& other);
 		~Cat(void);
 
+		const std::string&	getIdea(unsigned int index) const;
+		void				setIdea(unsigned int index, std::string idea) const;
+
 		void	makeSound(void) const;
 
 	protected:
 	private:
-		Brain	*brain;
+		Brain	*_brain;
 };
 
 #endif

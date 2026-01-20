@@ -1,11 +1,9 @@
 #include "Brain.hpp"
 #include <iostream>
 
-const unsigned int Brain::_idea_count = sizeof(Brain::_ideas) / sizeof(Brain::_ideas[0]);
-
 Brain::Brain(void)
 {
-	std::cout << "Brain default constructor called" << std::endl;
+	std::cerr << "Brain default constructor called" << std::endl;
 }
 
 Brain::Brain(const Brain& other)
@@ -13,12 +11,12 @@ Brain::Brain(const Brain& other)
 	unsigned int	i;
 
 	i = 0;
-	while (i < _idea_count)
+	while (i < _IDEA_COUNT)
 	{
 		this->_ideas[i] = other._ideas[i];
 		++i;
 	}
-	std::cout << "Brain copy constructor called" << std::endl;
+	std::cerr << "Brain copy constructor called" << std::endl;
 }
 
 Brain&	Brain::operator=(const Brain& other)
@@ -28,17 +26,29 @@ Brain&	Brain::operator=(const Brain& other)
 	if (this != &other)
 	{
 		i = 0;
-		while (i < _idea_count)
+		while (i < _IDEA_COUNT)
 		{
 			this->_ideas[i] = other._ideas[i];
 			++i;
 		}
 	}
-	std::cout << "Brain copy assignment operator called" << std::endl;
+	std::cerr << "Brain copy assignment operator called" << std::endl;
 	return (*this);
 }
 
 Brain::~Brain(void)
 {
-	std::cout << "Brain destructor called" << std::endl;
+	std::cerr << "Brain destructor called" << std::endl;
+}
+
+const std::string&	Brain::getIdea(unsigned int index) const
+{
+	return (_ideas[index % _IDEA_COUNT]);
+}
+
+void	Brain::setIdea(unsigned int index, std::string idea)
+{
+	if (index >= _IDEA_COUNT)
+		return ;
+	_ideas[index] = idea;
 }

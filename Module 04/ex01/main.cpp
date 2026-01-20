@@ -5,36 +5,38 @@
 
 int main(void)
 {
+	//proof of deep copy
 	{
-		const Animal*	meta = new Animal();
-		const Animal*	j = new Dog();
-		const Animal*	i = new Cat();
+		Cat	whiskers;
+		Cat	mowmow;
+		Dog	yummers;
+		Dog	princess;
 
-		std::cout << j->getType() << " " << std::endl;
-		std::cout << i->getType() << " " << std::endl;
-		i->makeSound(); //will output the cat sound!
-		j->makeSound();
-		meta->makeSound();
-		delete meta;
-		delete j;
-		delete i;
+		whiskers.setIdea(10, "kill kill kill kill");
+		mowmow.setIdea(20, "I will forget this");
+		yummers.setIdea(30, "Jumping is fun");
+		princess.setIdea(30, "I'm in heaven!");
+		mowmow = whiskers;
+		yummers = princess;
+		std::cout << "\"" << mowmow.getIdea(10) << "\"" << std::endl;
+		std::cout << "\"" << mowmow.getIdea(20) << "\"" << std::endl;
+		std::cout << "\"" << yummers.getIdea(30) << "\"" << std::endl;	
 	}
-
 	std::cout << std::endl;
-	
 	{
-		const Animal*		meta = new Animal();
-		const Animal* 		j = new Dog();
-		const WrongAnimal*	i = new WrongCat();
+		const unsigned int	animal_count = 6;
+		Animal				*zoo[animal_count];
+		unsigned int		i;
 
-		std::cout << j->getType() << " " << std::endl;
-		std::cout << i->getType() << " " << std::endl;
-		i->makeSound(); //will output the cat sound!
-		j->makeSound();
-		meta->makeSound();
-		delete meta;
-		delete j;
-		delete i;
+		i = 0;
+		while (i < animal_count / 2)
+			zoo[i++] = new Dog();
+		while (i < animal_count)
+			zoo[i++] = new Cat();
+		
+		i = 0;
+		while (i < animal_count)
+			delete zoo[i++];
 	}
 
 	return (0);
