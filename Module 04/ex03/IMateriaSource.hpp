@@ -1,6 +1,8 @@
 #ifndef IMATERIASOURCE_HPP
 # define IMATERIASOURCE_HPP
 
+# include "AMateria.hpp"
+
 class	IMateriaSource
 {
 	protected:
@@ -10,7 +12,8 @@ class	IMateriaSource
 		
 	public:
 		virtual ~IMateriaSource(void);
-		virtual void		learnMateria(AMateria *) = 0;
+
+		virtual void		learnMateria(AMateria *m) = 0;
 		virtual AMateria	*createMateria(const std::string& type) = 0;
 
 	protected:

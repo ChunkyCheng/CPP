@@ -1,7 +1,8 @@
 #include "Ice.hpp"
+#include <iostream>
 
 Ice::Ice(void)
-	:Amateria("ice")
+	:AMateria("ice")
 {
 }
 
@@ -22,10 +23,7 @@ Ice::~Ice(void)
 {
 }
 
-AMateria	*clone(void) const
-{
-	return (new Ice());
-}
+AMateria	*Ice::clone(void) const { return (new Ice()); }
 
 void	Ice::use(ICharacter& target)
 {

@@ -11,10 +11,13 @@ class	MateriaSource : public IMateriaSource
 		MateriaSource&	operator=(const MateriaSource& other);
 		~MateriaSource(void);
 
+		void		learnMateria(AMateria *m);
+		AMateria	*createMateria(const std::string& type);
+
 	protected:
 	private:
-		AMateria	*_templates
-		
+		static const int	_TEMPLATE_COUNT = 4;
+		AMateria			*_templates[_TEMPLATE_COUNT];	
 };
 
 #endif

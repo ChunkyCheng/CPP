@@ -4,6 +4,8 @@
 # include <string>
 # include "ICharacter.hpp"
 
+class	ICharacter;
+
 class	AMateria
 {
 	protected:
@@ -13,7 +15,6 @@ class	AMateria
 		AMateria&	operator=(const AMateria& other);
 
 	public:
-		AMateira(const std::string& type);
 		virtual ~AMateria(void);
 
 		const std::string&	getType(void) const;

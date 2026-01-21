@@ -3,7 +3,7 @@
 
 # include "AMateria.hpp"
 
-class	Ice : public Amateria
+class	Ice : public AMateria
 {
 	public:
 		Ice(void);
@@ -11,7 +11,8 @@ class	Ice : public Amateria
 		Ice&	operator=(const Ice& other);
 		~Ice(void);
 
-		void	use(ICharacter& target);
+		AMateria	*clone(void) const;
+		void		use(ICharacter& target);
 
 	protected:
 	private:

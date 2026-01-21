@@ -27,5 +27,4 @@ AMateria::~AMateria(void)
 }
 
 const std::string&	AMateria::getType(void) const { return (_type); }
-
-void	AMateria::use(ICharacter& target);
+void				AMateria::use(ICharacter& target) { (void)target; }

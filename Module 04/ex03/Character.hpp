@@ -12,10 +12,19 @@ class	Character : public ICharacter
 		Character&	operator=(const Character& other);
 		~Character(void);
 
+		const std::string&	getName(void) const;
+		AMateria			*getEquipment(int idx) const;
+
+		void	equip(AMateria *m);
+		void	unequip(int idx);
+		void	use(int idx, ICharacter& target);
+
 	protected:
 	private:
-		std::string	_name;
-		AMateria	*_inventory[4];
+		static const int	_SLOT_COUNT = 4;
+
+		std::string			_name;
+		AMateria			*_inventory[_SLOT_COUNT];
 };
 
 #endif

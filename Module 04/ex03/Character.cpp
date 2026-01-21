@@ -1,23 +1,27 @@
 #include "Character.hpp"
+#include <iostream>
 
 Character::Character(void)
 {
-	for (int i = 0; i < 4; ++i)
-		inventory[i] = NULL;
+	for (int i = 0; i < _SLOT_COUNT; ++i)
+		_inventory[i] = NULL;
 }
 
 Character::Character(const std::string& name)
 	:_name(name)
 {
-	for (int i = 0; i < 4; ++i)
-		inventory[i] = NULL;
+	for (int i = 0; i < _SLOT_COUNT; ++i)
+		_inventory[i] = NULL;
 }
 
 Character::Character(const Character& other)
 	:_name(other._name)
 {
-	for (int i = 0; i < 4; ++i)
-		_inventory[i] = other._inventory[i];
+	for (int i = 0; i < _SLOT_COUNT; ++i)
+	{
+		if (other._inventory[i])
+			_inventory[i] = other._inventory[i]->clone();
+	}
 }
 
 Character&	Character::operator=(const Character& other)
@@ -25,29 +29,40 @@ Character&	Character::operator=(const Character& other)
 	if (this != &other)
 	{
 		_name = other._name;
-		_equipCount = other._name;
-		for (int i = 0; i < 4; ++i)
-			_inventory[i] = other._inventory[i];
+		for (int i = 0; i < _SLOT_COUNT; ++i)
+		{
+			if (other._inventory[i])
+				_inventory[i] = other._inventory[i]->clone();
+		}
 	}
 	return (*this);
 }
 
 Character::~Character(void)
 {
+	for (int i = 0; i < _SLOT_COUNT; ++i)
+		delete _inventory[i];
 }
 
-const std::string	getName(void) const { return (_name); }
+const std::string&	Character::getName(void) const { return (_name); }
 
-void	equip(AMateria *m)
+AMateria	*Character::getEquipment(int idx) const
+{
+	if (idx >= _SLOT_COUNT || idx < 0)
+		return (NULL);
+	return (_inventory[idx]);
+}
+
+void	Character::equip(AMateria *m)
 {
 	int	i;
 
 	if (!m)
 		return ;
 	i = 0;
-	while (i < 4 && _inventory[i] == NULL)
+	while (i < _SLOT_COUNT && _inventory[i])
 		i++;
-	if (i == 4)
+	if (i == _SLOT_COUNT)
 		std::cout << _name << "'s inventory is full" << std::endl;
 	else
 	{
@@ -56,8 +71,13 @@ void	equip(AMateria *m)
 	}
 }
 
-void	unequip(int idx)
+void	Character::unequip(int idx)
 {
+	if (idx >= _SLOT_COUNT || idx < 0)
+	{
+		std::cout << _name << "_name only has " << _SLOT_COUNT << " slots" << std::endl;
+		return ;
+	}
 	if (_inventory[idx] == NULL)
 		std::cout << _name << " doesn't have Materia in slot " << idx << std::endl;
 	else
@@ -70,6 +90,11 @@ void	unequip(int idx)
 
 void	Character::use(int idx, ICharacter& target)
 {
+	if (idx >= _SLOT_COUNT || idx < 0)
+	{
+		std::cout << _name << "name only has " << _SLOT_COUNT << "slots" << std::endl;
+		return ;
+	}
 	if (_inventory[idx] == NULL)
 		std::cout << _name << " doesn't have Materia in slot " << idx << std::endl;
 	else
