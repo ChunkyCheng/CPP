@@ -45,3 +45,9 @@ DiamondTrap::~DiamondTrap(void)
 
 
 const std::string	DiamondTrap::getClass(void) const { return ("DiamondTrap"); }
+
+void	DiamondTrap::whoAmI(void) const
+{
+	std::cout << "My name is " << _name
+			  << "\nMy ClapTrap name is " << ClapTrap::_name << std::endl;
+}

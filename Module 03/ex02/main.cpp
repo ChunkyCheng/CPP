@@ -40,6 +40,8 @@ int	main(void)
 
 	Marcus.attack("Selene");
 	Selene.takeDamage(20);
+	Selene.attack("Marcus");
+	Marcus.takeDamage(30);
 	ShouXiang.guardGate();
 	KeeWan.highFivesGuys();
 

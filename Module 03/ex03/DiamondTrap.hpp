@@ -15,7 +15,7 @@ class	DiamondTrap : public FragTrap, public ScavTrap
 
 		const std::string	getClass(void) const;
 
-		using	ClapTrap::attack;
+		using	ScavTrap::attack;
 		void	whoAmI(void) const;
 
 	protected:

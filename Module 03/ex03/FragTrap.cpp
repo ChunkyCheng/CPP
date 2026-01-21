@@ -40,6 +40,21 @@ FragTrap::~FragTrap(void)
 
 const std::string	FragTrap::getClass(void) const { return ("FragTrap"); }
 
+void	FragTrap::attack(const std::string& target)
+{
+	std::cout << getClass() << " " << _name;
+	if (_hit_points <= 0)
+		std::cout	<< " could not attack because it is dead" << std::endl;
+	else if (_energy_points <= 0)
+		std::cout	<< " could not attack because it has no energy" << std::endl;
+	else
+	{
+		std::cout	<< " throws a grenade at " << target << " causing " << _attack_damage
+					<< " points of damage!" << std::endl;
+		_energy_points--;
+	}
+}
+
 void	FragTrap::highFivesGuys(void)
 {
 	std::cout << getClass() << " " << _name

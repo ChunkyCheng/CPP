@@ -1,16 +1,25 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
+const int	ClapTrap::_init_hit_points = 10;
+const int	ClapTrap::_init_energy_points = 10;
+const int	ClapTrap::_init_attack_damage = 0;
+
 ClapTrap::ClapTrap(void)
-	:_hit_points(10), _energy_points(10), _attack_damage(0)
+	:_hit_points(_init_hit_points),
+	 _energy_points(_init_energy_points),
+	 _attack_damage(_init_attack_damage)
 {
 	std::cerr << "ClapTrap default constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name)
-	:_name(name), _hit_points(10), _energy_points(10), _attack_damage(0)
+	:_name(name),
+	 _hit_points(_init_hit_points),
+	 _energy_points(_init_energy_points),
+	 _attack_damage(_init_attack_damage)
 {
-	std::cerr << "CLapTrap name constructor called: " << _name << std::endl;
+	std::cerr << "ClapTrap name constructor called: " << _name << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name, int hp, int ep, int attk_dmg)
@@ -41,10 +50,9 @@ ClapTrap&	ClapTrap::operator=(const ClapTrap& other)
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cerr << "ClapTrap destructor called: " << _name << std::endl;
+	std::cerr << getClass() << " destructor called: " << _name << std::endl;
 }
 
-const std::string&	ClapTrap::getName(void) const { return (_name); }
 const std::string	ClapTrap::getClass(void) const { return ("ClapTrap"); }
 
 void	ClapTrap::attack(const std::string& target)
@@ -89,4 +97,12 @@ void	ClapTrap::beRepaired(unsigned int amount)
 		std::cout << " used " << amount << " energy to repair and now has "
 				  << _hit_points << " health" << std::endl;
 	}
+}
+
+void	ClapTrap::printStatus(void) const
+{
+	std::cout << "\n[" << getClass() << " " << _name << "]\n"
+			  << "health: " << _hit_points << "\n"
+			  << "energy: " << _energy_points << "\n"
+			  << "attack: " << _attack_damage << "\n" << std::endl;
 }

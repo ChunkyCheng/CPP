@@ -14,6 +14,7 @@ class	FragTrap : virtual public ClapTrap
 
 		const std::string	getClass(void) const;
 
+		void	attack(const std::string& target);
 		void	highFivesGuys(void);
 
 	protected:

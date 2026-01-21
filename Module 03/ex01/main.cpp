@@ -8,12 +8,12 @@ int	main(void)
 	ClapTrap	*Maz_ptr;
 
 	Marcus.guardGate();
+	Marcus.attack("Dummy");
+	ShouXiang.attack("Dummy");
 	Marcus.takeDamage(20);
 	clone = ScavTrap(Marcus);
 	clone.takeDamage(30);
 	Maz_ptr = new ScavTrap("Maz");
 	Maz_ptr->takeDamage(90);
 	delete Maz_ptr;
-
-	Marcus.ClapAttk("Dummy");
 }

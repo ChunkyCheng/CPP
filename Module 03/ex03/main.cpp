@@ -13,6 +13,7 @@ int	main(void)
 
 	Caryn.guardGate();
 	Caryn.highFivesGuys();
+	Caryn.whoAmI();
 	Caryn.attack("Dummy");
 
 	Love.printStatus();
