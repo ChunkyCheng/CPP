@@ -13,6 +13,8 @@ MateriaSource::MateriaSource(const MateriaSource& other)
 	{
 		if (other._templates[i])
 			_templates[i] = other._templates[i]->clone();
+		else
+			_templates[i] = NULL;
 	}
 }
 
@@ -25,6 +27,8 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& other)
 			delete _templates[i];
 			if (other._templates[i])
 				_templates[i] = other._templates[i]->clone();
+			else
+				_templates[i] = NULL;
 		}
 	}
 	return (*this);

@@ -22,6 +22,7 @@ int main()
 		me->equip(deepCopy->createMateria("cure"));
 		me->equip(deepCopy->createMateria(""));
 		me->equip(deepCopy->createMateria("ice"));
+		me->equip(deepCopy->createMateria("ice"));
 		AMateria	*tmp = me->getEquipment(2);
 		me->unequip(2);
 		delete tmp;

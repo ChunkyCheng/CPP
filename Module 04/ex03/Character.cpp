@@ -21,6 +21,8 @@ Character::Character(const Character& other)
 	{
 		if (other._inventory[i])
 			_inventory[i] = other._inventory[i]->clone();
+		else
+			_inventory[i] = NULL;
 	}
 }
 
@@ -31,8 +33,11 @@ Character&	Character::operator=(const Character& other)
 		_name = other._name;
 		for (int i = 0; i < _SLOT_COUNT; ++i)
 		{
+			delete _inventory[i];
 			if (other._inventory[i])
 				_inventory[i] = other._inventory[i]->clone();
+			else
+				_inventory[i] = NULL;
 		}
 	}
 	return (*this);
@@ -63,7 +68,10 @@ void	Character::equip(AMateria *m)
 	while (i < _SLOT_COUNT && _inventory[i])
 		i++;
 	if (i == _SLOT_COUNT)
+	{
+		delete m;
 		std::cout << _name << "'s inventory is full" << std::endl;
+	}
 	else
 	{
 		_inventory[i] = m;
