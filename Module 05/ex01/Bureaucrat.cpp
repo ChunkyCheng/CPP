@@ -61,6 +61,27 @@ void	Bureaucrat::decrementGrade(void)
 	_checkGrade();
 }
 
+void	Bureaucrat::signForm(Form& to_sign) const
+{
+	if (to_sign.getSigned())
+	{
+		std::cout << _name << " couldn't sign form " << to_sign.getName()
+				  << " because it is already signed" << std::endl;
+		return ;
+	}
+	try
+	{
+		to_sign.beSigned(*this);
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cout << _name << " couldn't sign form " << to_sign.getName()
+				  << " because their level is too low" << std::endl;
+	}
+	std::cout << _name << " signed form " << to_sign.getName() << std::endl;
+}
+
 void	Bureaucrat::_checkGrade(void)
 {
 	if (_grade < GRADE_HIGHEST)

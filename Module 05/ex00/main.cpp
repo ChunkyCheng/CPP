@@ -12,7 +12,20 @@ int	main(void)
 	}
 	catch (std::exception& e)
 	{
-		std::cout << "AHHHHHHHHHH" << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
-	std::cout << ":)" << std::endl;
+	try
+	{
+		Bureaucrat	a("Steve", 120);
+		Bureaucrat	b("Aadit", 2);
+		std::cout << a << "\n" << b << std::endl;
+		b.incrementGrade();
+		std::cout << a << "\n" << b << std::endl;
+		b.incrementGrade();
+		std::cout << a << "\n" << b << std::endl;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 }

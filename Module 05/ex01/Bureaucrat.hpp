@@ -4,6 +4,9 @@
 # include <string>
 # include <iostream>
 # include <stdexcept>
+# include "Form.hpp"
+
+class	Form;
 
 class	Bureaucrat
 {
@@ -19,7 +22,8 @@ class	Bureaucrat
 
 		void	incrementGrade(void);
 		void	decrementGrade(void);
-
+		void	signForm(Form& to_sign) const;
+		
 	protected:
 	private:
 		std::string	_name;
