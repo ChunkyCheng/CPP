@@ -38,10 +38,10 @@ void	ShrubberyCreationForm::_action(void) const
 	std::ofstream	outfile;
 
 	filename = getTarget() + "_shrubbery";
-	outfile.open(filename.c_str(), std::ios::app);
+	outfile.open(filename.c_str());
 	if (!outfile.is_open())
 	{
-		std::cerr << "Error opening " << std::endl;
+		std::cerr << "Error opening " << filename << std::endl;
 		return ;
 	}
 	outfile << "\n";

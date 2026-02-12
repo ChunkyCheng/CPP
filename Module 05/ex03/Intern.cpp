@@ -43,13 +43,13 @@ AForm	*Intern::makeForm(const std::string& name, const std::string& target)
 	}
 	switch (i)
 	{
-		case 1:
+		case 0:
 			form = new ShrubberyCreationForm(target);
 			break ;
-		case 2:
+		case 1:
 			form = new RobotomyRequestForm(target);
 			break ;
-		case 3:
+		case 2:
 			form = new PresidentialPardonForm(target);
 			break ;
 		default:

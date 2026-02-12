@@ -37,8 +37,8 @@ Form&	Form::operator=(const Form& other)
 		this->_name = other._name;
 		this->_signed = other._signed;
 	}
-	return (*this);
 	std::cerr << "Form copy assignment operator called" << std::endl;
+	return (*this);
 }
 
 Form::~Form(void)
