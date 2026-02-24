@@ -10,6 +10,7 @@ class	Span
 		Span(void);
 	public:
 		Span(unsigned int N);
+		template<typename T> Span(T begin, T end);
 		Span(const Span& other);
 		Span&	operator=(const Span& other);
 		~Span(void);
@@ -36,5 +37,18 @@ class	Span
 				const char	*what(void) const throw();
 		};
 };
+
+template<typename T>
+Span::Span(T begin, T end)
+{
+	_size = 0;
+	while (begin != end)
+	{
+		_data.push_back(*begin);
+		_size++;
+		begin++;
+	}
+	_filled = _size;
+}
 
 #endif
