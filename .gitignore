@@ -5,5 +5,5 @@
 !Makefile
 !*.hpp
 !*.cpp
-!.*.tpp
+!*.tpp
 !.gitignore
