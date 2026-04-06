@@ -15,7 +15,10 @@ class	Span
 		Span&	operator=(const Span& other);
 		~Span(void);
 
-		void			addNumber(int number);
+		void						addNumber(int number);
+		template<typename T>void	addNumber(T it, T ite);
+
+		unsigned int	size(void) const;
 		unsigned int	shortestSpan(void) const;
 		unsigned int	longestSpan(void) const;
 
@@ -49,6 +52,16 @@ Span::Span(T begin, T end)
 		begin++;
 	}
 	_filled = _size;
+}
+
+template<typename T>
+void	Span::addNumber(T it, T ite)
+{
+	while (it != ite)
+	{
+		addNumber(*it);
+		++it;
+	}
 }
 
 #endif

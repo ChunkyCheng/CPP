@@ -1,5 +1,7 @@
 #include "Span.hpp"
 #include <cstdlib>
+#include <algorithm>
+#include <iostream>
 
 Span::Span(void) {}
 
@@ -34,37 +36,36 @@ void	Span::addNumber(int number)
 	_filled++;
 }
 
+unsigned int	Span::size(void) const
+{
+	return (_size);
+}
+
+static int	calc_span(int a, int b)
+{
+	return (a - b);
+}
+
 unsigned int	Span::shortestSpan(void) const
 {
-	unsigned int	min;
-	unsigned int	distance;
-
+	std::vector<int>	temp(_data.begin(), _data.begin() + _filled);
+	std::vector<int>	diff(_filled - 1);
+	
 	if (_filled <= 1)
 		throw (TooFewElementsException());
-	min = std::abs(_data[0] - _data[1]);
-	for (unsigned int i = 2; i < _filled; ++i)
-	{
-		distance = std::abs(_data[i - 1] - _data[i]);
-		if (distance < min)
-			min = distance;
-	}
-	return (min);
+	std::sort(temp.begin(), temp.end());
+	std::transform(temp.begin() + 1, temp.end(), temp.begin(), diff.begin(), calc_span);
+	return (*std::min_element(diff.begin(), diff.end()));
 }
 
 unsigned int	Span::longestSpan(void) const
 {
-	unsigned int	max;
-	unsigned int	distance;
+	std::vector<int>	temp(_data.begin(), _data.begin() + _filled);
+
 	if (_filled <= 1)
 		throw (TooFewElementsException());
-	max = 0;
-	for (unsigned int i = 1; i < _filled; ++i)
-	{
-		distance = std::abs(_data[i - 1] - _data[i]);
-		if (distance > max)
-			max = distance;
-	}
-	return (max);
+	std::sort(temp.begin(), temp.end());
+	return (*(temp.end() - 1) - *temp.begin());
 }
 
 const char	*Span::FullException::what(void) const throw()
