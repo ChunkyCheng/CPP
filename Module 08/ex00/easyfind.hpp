@@ -3,20 +3,17 @@
 
 # include <stdexcept>
 # include <iostream>
+# include <algorithm>
 
 template<typename T>
 int&	easyfind(T& container, const int target)
 {
 	typename T::iterator	it;
 
-	it = container.begin();
-	while (it != container.end())
-	{
-		if (*it == target)
-			return (*it);
-		++it;
-	}
-	throw (std::exception());
+	it = std::find(container.begin(), container.end(), target);
+	if (it == container.end())
+		throw (std::exception());
+	return (*it);
 }
 
 template<typename T>

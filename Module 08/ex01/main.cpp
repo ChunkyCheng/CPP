@@ -35,12 +35,12 @@ int	main(void)
 		std::list<int>	list;
 		int				rnum;
 		int				i;
-		Span			span(0);
+		Span			span(LARGE_SPAN_SIZE * 2);
 
 		i = 0;
 		while (1)
 		{
-			rnum = std::rand() % 100;
+			rnum = std::rand() % 5000;
 			list.push_back(rnum);
 			std::cerr << rnum;
 			i++;
@@ -49,7 +49,10 @@ int	main(void)
 			std::cerr << ", ";
 		}
 		std::cout << std::endl;
-		span = Span(list.begin(), list.end());
+		span.addNumber(list.begin(), list.end());
+		std::cout << span.shortestSpan() << std::endl;
+		std::cout << span.longestSpan() << std::endl;
+		span.addNumber(list.begin(), list.end());
 		std::cout << span.shortestSpan() << std::endl;
 		std::cout << span.longestSpan() << std::endl;
 	}
