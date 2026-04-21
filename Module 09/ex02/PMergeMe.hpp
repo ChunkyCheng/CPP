@@ -1,18 +1,31 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
+# include <vector>
+
 class	PMergeMe
 {
-	private:
+	public:
 		PMergeMe(void);
 		PMergeMe(const PMergeMe& other);
 		PMergeMe&	operator=(const PMergeMe& other);
 		~PMergeMe(void);
 
 	public:
-		void	sort(
-	protected:
+		void	sort(std::vector<unsigned int>& nums);
+	
 	private:
+		unsigned int	_comparisons;
 };
+
+template<typename T>
+void	swap(T& a, T& b)
+{
+	T	temp;
+
+	temp = a;
+	a = b;
+	b = temp;
+}
 
 #endif

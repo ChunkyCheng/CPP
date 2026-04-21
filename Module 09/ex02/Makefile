@@ -1,7 +1,7 @@
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g3
 
-SRCS	=	main.cpp
+SRCS	=	main.cpp	PMergeMe.cpp
 
 OBJDIR	=	OBJS
 OBJS	=	$(SRCS:%.cpp=$(OBJDIR)/%.o)
