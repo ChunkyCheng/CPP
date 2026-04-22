@@ -2,6 +2,7 @@
 # define PMERGEME_HPP
 
 # include <vector>
+# include <pair>
 
 class	PMergeMe
 {
