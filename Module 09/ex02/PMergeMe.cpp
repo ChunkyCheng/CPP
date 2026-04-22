@@ -1,5 +1,6 @@
 #include "PMergeMe.hpp"
 #include <iostream>
+#include <algorithm>
 #include <cmath>
 
 PMergeMe::PMergeMe(void)
@@ -46,18 +47,18 @@ static unsigned int	lastInGroup(std::vector<unsigned int>& nums, int group_size,
 	return (nums[i * group_size + group_size - 1]);
 }
 
-void	swap_groups(std::vector<unsigned int>& nums, int group_size, int i)
+static void	swap_groups(std::vector<unsigned int>& nums, int group_size, int i)
 {
 	for (int j = 0; j < group_size; ++j)
 		swap(nums[i * group_size + j], nums[i * group_size + group_size + j]);
 }
 
-void	jacobsthal_insert(std::vector<unsigned int>& nums, int group_size)
+static void	seperate_pend(std::vector<unsigned int>& nums,
+std::vector<unsigned int>& pend, int group_size)
 {
-	std::vector<unsigned int>	pend;
-	unsigned int				i;
-	unsigned int				j;
-	unsigned int				loop_limit;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	loop_limit;
 
 	i = group_size * 2;
 	j = i;
@@ -73,13 +74,43 @@ void	jacobsthal_insert(std::vector<unsigned int>& nums, int group_size)
 			++j;
 		++i;
 	}
+}
+
+static void	insert_from_pend(std::vector<unsigned int>& nums,
+std::vector<unsigned int>& pend, int group_size, int insert_count)
+{
+	int	i
+}
+
+static void	update_jacobsthal(int& jacobsthal1, int& jacobsthal2)
+{
+	int	jacobsthal3;
+
+	jacobsthal3 = jacobsthal2 + 2 * jacobsthal1;
+	jacobsthal1 = jacobsthal2;
+	jacobsthal2 = jacobsthal3;
+}
+
+void	jacobsthal_insert(std::vector<unsigned int>& nums, int group_size)
+{
+	std::vector<unsigned int>	pend;
+	int							jacobsthal1;
+	int							jacobsthal2;
+
+	jacobstal1 = 1;
+	jacobstal2 = 3;
+
+	seperate_pend(nums, pend, group_size);	
 	std::cout << "pend:\n";
 	print_groups(pend, group_size, false);
 	std::cout << "\nmain:\n";
 	print_groups(nums, group_size, false);
 	std::cout << "\n\n";
-	for (unsigned int k = 0; k < pend.size(); ++k)
-		nums.push_back(pend[k]);
+	while (pend.size())
+	{
+		insert_from_pend(nums, pend, group_size, jacobsthal2 - jacobsthal1);
+		update_jacobsthal(jacobsthal1, jacobsthal2);
+	}
 
 }
 
