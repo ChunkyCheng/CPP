@@ -42,9 +42,9 @@ static void	print_groups(std::vector<unsigned int>& nums, int group_size, bool s
 	}
 }
 
-static unsigned int	lastInGroup(std::vector<unsigned int>& nums, int group_size, int i)
+static unsigned int	lastInGroup(int group_size, int i)
 {
-	return (nums[i * group_size + group_size - 1]);
+	return (i * group_size + group_size - 1);
 }
 
 static void	swap_groups(std::vector<unsigned int>& nums, int group_size, int i)
@@ -53,21 +53,25 @@ static void	swap_groups(std::vector<unsigned int>& nums, int group_size, int i)
 		swap(nums[i * group_size + j], nums[i * group_size + group_size + j]);
 }
 
-static void	seperate_pend(std::vector<unsigned int>& nums,
-std::vector<unsigned int>& pend, int group_size)
+static void	seperate_pend(std::vector<unsigned int>& nums, std::vector<s_pend>& pend,
+int group_size)
 {
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	loop_limit;
 
-	i = group_size * 2;
+	i = 2;
 	j = i;
-	loop_limit = nums.size() / group_size * group_size;
+	loop_limit = nums.size() / group_size;
 	while (i < loop_limit)
 	{
-		if ((i / group_size) % 2 == 0)
+		if (i % 2 == 0)
 		{
-			pend.push_back(nums[j]);
+			std::vector<unsigned int>	group;
+
+			for (int k = 0; k < group_size; ++k)
+				group.push_back(nums[lastInGroup(group_size, j) - k]);
+			pend.push_back((s_pend){group, });
 			nums.erase(nums.begin() + j);
 		}
 		else
@@ -93,12 +97,12 @@ static void	update_jacobsthal(int& jacobsthal1, int& jacobsthal2)
 
 void	jacobsthal_insert(std::vector<unsigned int>& nums, int group_size)
 {
-	std::vector<unsigned int>	pend;
-	int							jacobsthal1;
-	int							jacobsthal2;
+	std::vector<s_pend>	pend;
+	int					jacobsthal1;
+	int					jacobsthal2;
 
-	jacobstal1 = 1;
-	jacobstal2 = 3;
+	jacobsthal1 = 1;
+	jacobsthal2 = 3;
 
 	seperate_pend(nums, pend, group_size);	
 	std::cout << "pend:\n";
@@ -126,7 +130,7 @@ void	merge_insert(std::vector<unsigned int>& nums, int group_size)
 	std::cout << "\n";
 	for (unsigned int i = 0; i + 1 < nums.size() / group_size; i += 2)
 	{
-		if (lastInGroup(nums, group_size, i) > lastInGroup(nums, group_size, i + 1))
+		if (nums[lastInGroup(group_size, i)] > nums[lastInGroup(group_size, i + 1)])
 			swap_groups(nums, group_size, i);
 	}
 	std::cout << "After swaps:\n";

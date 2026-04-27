@@ -3,6 +3,7 @@
 #include <climits>
 #include <cerrno>
 #include <vector>
+#include <algorithm>
 #include "PMergeMe.hpp"
 
 int	main(int argc, char *argv[])
@@ -17,12 +18,18 @@ int	main(int argc, char *argv[])
 	}
 	for (int i = 1; argv[i]; ++i)
 	{
-		sequence.push_back(std::strtol(argv[i], &endptr, 10));
-		if (sequence.back() > INT_MAX || errno == ERANGE || *endptr != '\0')
+		long num = std::strtol(argv[i], &endptr, 10);
+		if (num > INT_MAX || errno == ERANGE || *endptr != '\0')
 		{
 			std::cerr << "Error: all inputs must be positive integers" << std::endl;
 			return (2);
 		}
+		if (std::find(sequence.begin(), sequence.end(), num) != sequence.end())
+		{
+			std::cerr << "Error: duplicate input" << std::endl;
+			return (3);
+		}
+		sequence.push_back(static_cast<int>(num));
 	}
 
 	PMergeMe	FordJohnson;

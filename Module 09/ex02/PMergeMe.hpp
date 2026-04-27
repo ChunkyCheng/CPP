@@ -15,6 +15,11 @@ class	PMergeMe
 		void	sort(std::vector<unsigned int>& nums);
 	
 	private:
+		struct s_pend
+		{
+			std::vector<unsigned int>	group;
+			unsigned int				bound;
+		};
 		unsigned int	_comparisons;
 };
 
