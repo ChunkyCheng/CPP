@@ -1,7 +1,8 @@
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g3
+LFLAGS		=	-lm
 
-SRCS	=	main.cpp	PMergeMe.cpp
+SRCS	=	main.cpp	PmergeMe.cpp
 
 OBJDIR	=	OBJS
 OBJS	=	$(SRCS:%.cpp=$(OBJDIR)/%.o)
@@ -15,7 +16,7 @@ RED		=	\033[31m
 
 ##########################################################################################
 
-NAME	=	PMergeMe
+NAME	=	PmergeMe
 
 all: $(NAME)
 
