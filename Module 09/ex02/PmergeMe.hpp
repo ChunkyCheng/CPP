@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 template<typename T>
 class	PmergeMe
@@ -22,6 +23,7 @@ class	PmergeMe
 		size_t			getGroupSize(void) const;
 	
 	private:
+		typedef typename T::iterator	iterator;
 		struct s_group
 		{
 			typename T::iterator	begin;
@@ -41,8 +43,8 @@ class	PmergeMe
 
 		void			mergeInsert(void);
 		void			jacobsthalInsert(void);
-		void			initPend(PmergeMe<T>& pend, T& partners);
-		void			binaryInsert(size_t min, size_t max, s_group pend_element);
+		void			initPend(PmergeMe<T>& pend, std::vector<size_t>& partners);
+		size_t			binaryInsert(size_t min, size_t max, s_group pend_element);
 
 		static const bool		_debug = false;
 		static std::ofstream	_nullstream;

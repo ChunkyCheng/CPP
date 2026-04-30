@@ -2,10 +2,10 @@
 #include <cstdlib>
 #include <climits>
 #include <cerrno>
+#include <ctime>
 #include <vector>
 #include <deque>
 #include <algorithm>
-#include <ctime>
 #include "PmergeMe.hpp"
 
 static bool	parse(char*	argv[], std::vector<int>& nums)
@@ -18,11 +18,6 @@ static bool	parse(char*	argv[], std::vector<int>& nums)
 		if (num > INT_MAX || num < 1 || errno == ERANGE || *endptr != '\0')
 		{
 			std::cerr << "Error: all inputs must be positive integers" << std::endl;
-			return (false);
-		}
-		if (std::find(nums.begin(), nums.end(), num) != nums.end())
-		{
-			std::cerr << "Error: duplicate input" << std::endl;
 			return (false);
 		}
 		nums.push_back(static_cast<int>(num));
@@ -75,5 +70,9 @@ int	main(int argc, char *argv[])
 	std::cout << "Time to process a range of " << vector.size()
 		  	  << " elements with std::deque  : "
 		  	  << gettime_usec() - start_time << "us\n";
+	if (std::adjacent_find
+		(vector.begin(), vector.end(), std::greater<int>()) != vector.end()
+		|| std::adjacent_find
+		(deque.begin(), deque.end(), std::greater<int>()) != deque.end())
+		std::cout << "\033[1;31mKO\033[0m" << std::endl;
 }
-

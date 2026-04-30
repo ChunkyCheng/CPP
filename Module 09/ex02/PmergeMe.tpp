@@ -5,7 +5,7 @@ std::ofstream	PmergeMe<T>::_nullstream("/dev/null");
 
 template<typename T>
 std::ostream&	PmergeMe<T>::_out
-	= PmergeMe<T>::_debug ? std::cout : PmergeMe<T>::_nullstream;
+	= PmergeMe<T>::_debug ? std::cerr : PmergeMe<T>::_nullstream;
 
 template<typename T>
 PmergeMe<T>::PmergeMe(T& data, int group_size)
@@ -106,14 +106,13 @@ void	PmergeMe<T>::mergeInsert(void)
 template<typename T>
 void	PmergeMe<T>::jacobsthalInsert(void)
 {
-	T			temp;
-	PmergeMe<T>	pend(temp, _group_size);
-	T			partners;
+	T					temp;
+	PmergeMe<T>			pend(temp, _group_size);
+	std::vector<size_t>	partners;
 
 	initPend(pend, partners);
 	_out << "main:\n" << *this << "\n";
 	_out << "pend:\n" << pend << "\n";
-	_out << "partners:\n" << PmergeMe(partners, 1) << "\n";
 
 	size_t	jacobsthal1 = 1;
 	size_t	jacobsthal2 = 3;
@@ -123,13 +122,22 @@ void	PmergeMe<T>::jacobsthalInsert(void)
 		{
 			if (i > pend.size())
 				continue ;
+			
+			size_t	insert_idx;
+
 			if (i <= partners.size())
 			{
-				binaryInsert(0, find(partners[i - 1]), pend[i - 1]);
+				insert_idx = binaryInsert(0, partners[i - 1], pend[i - 1]);
 				partners.erase(partners.begin() + i - 1);
 			}
 			else
-				binaryInsert(0, size(), pend[i - 1]);
+				insert_idx = binaryInsert(0, size(), pend[i - 1]);
+			
+			std::vector<size_t>::iterator	
+			higher = std::lower_bound(partners.begin(), partners.end(),	insert_idx);
+
+			while (higher != partners.end())
+				(*higher++)++;
 			pend.erase(i - 1);
 		}
 
@@ -141,7 +149,7 @@ void	PmergeMe<T>::jacobsthalInsert(void)
 }
 
 template<typename T>
-void	PmergeMe<T>::initPend(PmergeMe<T>& pend, T& partners)
+void	PmergeMe<T>::initPend(PmergeMe<T>& pend, std::vector<size_t>& partners)
 {
 	size_t	i = 2;
 	size_t	j = 2;
@@ -155,7 +163,7 @@ void	PmergeMe<T>::initPend(PmergeMe<T>& pend, T& partners)
 
 			pend.insert(pend.size(), group);
 			if (i + 1 < loop_limit)
-				partners.push_back(*((*this)[j + 1].begin));
+				partners.push_back(j);
 			erase(j);
 		}
 		else
@@ -165,7 +173,7 @@ void	PmergeMe<T>::initPend(PmergeMe<T>& pend, T& partners)
 }
 
 template<typename T>
-void	PmergeMe<T>::binaryInsert(size_t min, size_t max, s_group pend_element)
+size_t	PmergeMe<T>::binaryInsert(size_t min, size_t max, s_group pend_element)
 {
 	while (min < max)
 	{
@@ -177,6 +185,7 @@ void	PmergeMe<T>::binaryInsert(size_t min, size_t max, s_group pend_element)
 			min = mid + 1;
 	}
 	insert(min, pend_element);
+	return (min);
 }
 
 template<typename T>
@@ -190,7 +199,7 @@ bool	PmergeMe<T>::checkSuccess(size_t maxComps) const
 		_out << "Comparisons within limits! :)" << "\n";
 	else
 	{
-		_out << "Comparisons beyong limits! >:(" << "\n";
+		_out << "Comparisons beyond limits! >:(" << "\n";
 		success = false;
 	}
 	if (std::adjacent_find
