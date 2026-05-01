@@ -23,22 +23,18 @@ class	PmergeMe
 		size_t			getGroupSize(void) const;
 	
 	private:
-		typedef std::vector<size_t>	indxvect;
-		struct s_group
-		{
-			typename T::iterator	begin;
-			typename T::iterator	end;
-		};
+		typedef std::vector<size_t>		indxvect;
+		typedef typename T::iterator	t_group;
 
 		const size_t	_group_size;
 		T&				_data;
 		size_t			_comparisons;
 
 		size_t			size(void) const;
-		void			insert(size_t index, s_group group);
+		void			insert(size_t index, t_group group);
 		void			erase(size_t index);
-		int				grpcmp(s_group a, s_group b);
-		s_group			operator[](size_t index);
+		int				grpcmp(t_group a, t_group b);
+		t_group			operator[](size_t index);
 
 		void			mergeInsert(void);
 		void			jacobsthalInsert(void);

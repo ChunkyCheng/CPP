@@ -26,40 +26,43 @@ template<typename T>
 size_t	PmergeMe<T>::getGroupSize(void) const { return (_group_size); }
 
 template<typename T>
-size_t	PmergeMe<T>::size(void) const {	return (_data.size() / _group_size); }
+size_t	PmergeMe<T>::size(void) const
+{
+	return (_data.size() / _group_size);
+}
 
 template<typename T>
-void	PmergeMe<T>::insert(size_t index, s_group val)
+void	PmergeMe<T>::insert(size_t index, t_group val)
 {
-	s_group	group = (*this)[index];
+	t_group	group = (*this)[index];
 
-	_data.insert(group.begin, val.begin, val.begin + _group_size);
+	_data.insert(group, val, val + _group_size);
 }
 
 template<typename T>
 void	PmergeMe<T>::erase(size_t index)
 {
-	s_group	group = (*this)[index];
+	t_group	group = (*this)[index];
 
-	_data.erase(group.begin, group.begin + _group_size);
+	_data.erase(group, group + _group_size);
 }
 
 template<typename T>
-int	PmergeMe<T>::grpcmp(s_group a, s_group b)
+int	PmergeMe<T>::grpcmp(t_group a, t_group b)
 {
 	++_comparisons;
-	return (*(a.begin + _group_size - 1) - *(b.begin + _group_size - 1));
+	return (*(a + _group_size - 1) - *(b + _group_size - 1));
 }
 
 template<typename T>
-typename PmergeMe<T>::s_group	PmergeMe<T>::operator[](size_t index)
+typename PmergeMe<T>::t_group	PmergeMe<T>::operator[](size_t index)
 {
-	s_group	group;
+	t_group	group;
 
-	group.begin = _data.begin() + index * _group_size;
-//	group.end = group.begin + _group_size;
-	return (group);
+	return(_data.begin() + index * _group_size);
 }
+
+//=======================================================================================
 
 template<typename T>
 void	PmergeMe<T>::mergeInsert(void)
@@ -69,15 +72,15 @@ void	PmergeMe<T>::mergeInsert(void)
 	_out << "Before:\n" << *this << "\n";
 	for (size_t i = 0; i < size() / 2; ++i)
 	{
-		s_group	a = (*this)[i * 2];
-		s_group b = (*this)[i * 2 + 1];
+		t_group	a = (*this)[i * 2];
+		t_group b = (*this)[i * 2 + 1];
 
 		if (grpcmp(a, b) > 0)
 		{
 			T	temp(_group_size);
-			std::copy(a.begin, a.begin + _group_size, temp.begin());
-			std::copy(b.begin, b.begin + _group_size, a.begin);
-			std::copy(temp.begin(), temp.end(), b.begin);
+			std::copy(a, a + _group_size, temp.begin());
+			std::copy(b, b + _group_size, a);
+			std::copy(temp.begin(), temp.end(), b);
 		}
 	}
 	_out << "After:\n" << *this << "\n";
@@ -131,7 +134,7 @@ void	PmergeMe<T>::initPend(PmergeMe<T>& pend, std::vector<size_t>& partners)
 	{
 		if (i % 2 == 0)
 		{
-			s_group	group = (*this)[j];
+			t_group	group = (*this)[j];
 
 			pend.insert(pend.size(), group);
 			if (i + 1 < loop_limit)
@@ -147,7 +150,7 @@ void	PmergeMe<T>::initPend(PmergeMe<T>& pend, std::vector<size_t>& partners)
 template<typename T>
 void	PmergeMe<T>::binaryInsert(PmergeMe& pend, indxvect& partners, size_t i)
 {
-	s_group	pend_element = pend[i];
+	t_group	pend_element = pend[i];
 	size_t	min;
 	size_t	max;
 
@@ -174,6 +177,8 @@ void	PmergeMe<T>::binaryInsert(PmergeMe& pend, indxvect& partners, size_t i)
 	while (it != partners.end())
 		(*it++)++;
 }
+
+//=======================================================================================
 
 template<typename T>
 bool	PmergeMe<T>::checkSuccess(size_t maxComps) const
