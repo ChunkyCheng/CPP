@@ -67,12 +67,11 @@ int	main(int argc, char *argv[])
 			  << gettime_usec() - start_time << "us\n";
 	start_time = gettime_usec();
 	PmergeMe<std::deque<int> >::sort(deque);
-	std::cout << "Time to process a range of " << vector.size()
+	std::cout << "Time to process a range of " << deque.size()
 		  	  << " elements with std::deque  : "
 		  	  << gettime_usec() - start_time << "us\n";
-	if (std::adjacent_find
-		(vector.begin(), vector.end(), std::greater<int>()) != vector.end()
-		|| std::adjacent_find
-		(deque.begin(), deque.end(), std::greater<int>()) != deque.end())
+	if (nums.size() != vector.size() || nums.size() != deque.size()
+		|| !std::equal(nums.begin(), nums.end(), vector.begin())
+		|| !std::equal(nums.begin(), nums.end(), deque.begin()))
 		std::cout << "\033[1;31mKO\033[0m" << std::endl;
 }

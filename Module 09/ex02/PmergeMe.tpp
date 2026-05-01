@@ -2,7 +2,6 @@
 
 template<typename T>
 std::ofstream	PmergeMe<T>::_nullstream("/dev/null");
-
 template<typename T>
 std::ostream&	PmergeMe<T>::_out
 	= PmergeMe<T>::_debug ? std::cerr : PmergeMe<T>::_nullstream;
@@ -27,17 +26,14 @@ template<typename T>
 size_t	PmergeMe<T>::getGroupSize(void) const { return (_group_size); }
 
 template<typename T>
-size_t	PmergeMe<T>::size(void) const
-{
-	return (_data.size() / _group_size);
-}
+size_t	PmergeMe<T>::size(void) const {	return (_data.size() / _group_size); }
 
 template<typename T>
 void	PmergeMe<T>::insert(size_t index, s_group val)
 {
 	s_group	group = (*this)[index];
 
-	_data.insert(group.begin, val.begin, val.end);
+	_data.insert(group.begin, val.begin, val.begin + _group_size);
 }
 
 template<typename T>
@@ -45,22 +41,14 @@ void	PmergeMe<T>::erase(size_t index)
 {
 	s_group	group = (*this)[index];
 
-	_data.erase(group.begin, group.end);
-}
-
-template<typename T>
-size_t	PmergeMe<T>::find(typename T::value_type val)
-{
-	typename T::iterator	val_pos = std::find(_data.begin(), _data.end(), val);
-
-	return (std::distance(_data.begin(), val_pos) / _group_size);
+	_data.erase(group.begin, group.begin + _group_size);
 }
 
 template<typename T>
 int	PmergeMe<T>::grpcmp(s_group a, s_group b)
 {
 	++_comparisons;
-	return (*(a.end - 1) - *(b.end - 1));
+	return (*(a.begin + _group_size - 1) - *(b.begin + _group_size - 1));
 }
 
 template<typename T>
@@ -69,7 +57,7 @@ typename PmergeMe<T>::s_group	PmergeMe<T>::operator[](size_t index)
 	s_group	group;
 
 	group.begin = _data.begin() + index * _group_size;
-	group.end = group.begin + _group_size;
+//	group.end = group.begin + _group_size;
 	return (group);
 }
 
@@ -87,8 +75,8 @@ void	PmergeMe<T>::mergeInsert(void)
 		if (grpcmp(a, b) > 0)
 		{
 			T	temp(_group_size);
-			std::copy(a.begin, a.end, temp.begin());
-			std::copy(b.begin, b.end, a.begin);
+			std::copy(a.begin, a.begin + _group_size, temp.begin());
+			std::copy(b.begin, b.begin + _group_size, a.begin);
 			std::copy(temp.begin(), temp.end(), b.begin);
 		}
 	}
@@ -122,23 +110,7 @@ void	PmergeMe<T>::jacobsthalInsert(void)
 		{
 			if (i > pend.size())
 				continue ;
-			
-			size_t	insert_idx;
-
-			if (i <= partners.size())
-			{
-				insert_idx = binaryInsert(0, partners[i - 1], pend[i - 1]);
-				partners.erase(partners.begin() + i - 1);
-			}
-			else
-				insert_idx = binaryInsert(0, size(), pend[i - 1]);
-			
-			std::vector<size_t>::iterator	
-			higher = std::lower_bound(partners.begin(), partners.end(),	insert_idx);
-
-			while (higher != partners.end())
-				(*higher++)++;
-			pend.erase(i - 1);
+			binaryInsert(pend, partners, i - 1);	
 		}
 
 		size_t	jacobsthal3 = jacobsthal2 + jacobsthal1 * 2;
@@ -173,8 +145,20 @@ void	PmergeMe<T>::initPend(PmergeMe<T>& pend, std::vector<size_t>& partners)
 }
 
 template<typename T>
-size_t	PmergeMe<T>::binaryInsert(size_t min, size_t max, s_group pend_element)
+void	PmergeMe<T>::binaryInsert(PmergeMe& pend, indxvect& partners, size_t i)
 {
+	s_group	pend_element = pend[i];
+	size_t	min;
+	size_t	max;
+
+	min = 0;
+	if (i < partners.size())
+	{
+		max = partners[i];
+		partners.erase(partners.begin() + i);
+	}
+	else 
+		max = size();
 	while (min < max)
 	{
 		size_t	mid = (min + max) / 2;
@@ -185,7 +169,10 @@ size_t	PmergeMe<T>::binaryInsert(size_t min, size_t max, s_group pend_element)
 			min = mid + 1;
 	}
 	insert(min, pend_element);
-	return (min);
+	pend.erase(i);
+	indxvect::iterator it = std::lower_bound(partners.begin(), partners.end(), min);
+	while (it != partners.end())
+		(*it++)++;
 }
 
 template<typename T>
