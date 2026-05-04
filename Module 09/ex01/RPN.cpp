@@ -48,8 +48,15 @@ static bool	operate(std::stack<int>& stack, char operation)
 			stack.push(operand1 * operand2);
 			break ;
 		case 3:
+		{
+			if (operand2 == 0)
+			{
+				std::cerr << "Error: divide by zero" << std::endl;
+				return (false);
+			}
 			stack.push(operand1 / operand2);
 			break ;
+		}
 		default:
 			std::cerr << "Error: invalid token '" << operation << "'" << std::endl;
 			return (false);
