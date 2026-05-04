@@ -1,5 +1,6 @@
 #include "RPN.hpp"
 #include <iostream>
+#include <climits>
 
 RPN::RPN(void)
 {
@@ -24,28 +25,29 @@ RPN::~RPN(void)
 
 static bool	operate(std::stack<int>& stack, char operation)
 {
-	int	operand1;
-	int	operand2;
+	long long	operand1;
+	long long	operand2;
+	long long	result;
 
 	if (stack.size() < 2)
 	{
 		std::cerr << "Error: invalid expression" << std::endl;
 		return (false);
 	}
-	operand2 = stack.top();
+	operand2 = static_cast<long long>(stack.top());
 	stack.pop();
-	operand1 = stack.top();
+	operand1 = static_cast<long long>(stack.top());
 	stack.pop();
 	switch (std::string("+-*/").find(operation))
 	{
 		case 0:
-			stack.push(operand1 + operand2);
+			result = operand1 + operand2;
 			break ;
 		case 1:
-			stack.push(operand1 - operand2);
+			result = operand1 - operand2;
 			break ;
 		case 2:
-			stack.push(operand1 * operand2);
+			result = operand1 * operand2;
 			break ;
 		case 3:
 		{
@@ -54,13 +56,19 @@ static bool	operate(std::stack<int>& stack, char operation)
 				std::cerr << "Error: divide by zero" << std::endl;
 				return (false);
 			}
-			stack.push(operand1 / operand2);
+			result = operand1 / operand2;
 			break ;
 		}
 		default:
 			std::cerr << "Error: invalid token '" << operation << "'" << std::endl;
 			return (false);
 	}
+	if (result > INT_MAX || result < INT_MIN)
+	{
+		std::cerr << "Error: integer overflow" << std::endl;
+		return (false);
+	}
+	stack.push(static_cast<int>(result));
 	return (true);
 }
 
